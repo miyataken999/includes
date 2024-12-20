@@ -2,7 +2,7 @@
 include_once "config.php";
 
 if(isset($_GET["test"])){
-	// ini_set("display_errors",1);
+	ini_set("display_errors",1);
 }
 ?>
 <!DOCTYPE html>
