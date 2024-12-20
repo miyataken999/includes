@@ -262,6 +262,9 @@ if($Eoc_chigins_unfinished->brand != ''){
 //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 //ステータス分岐
 //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+sendGoogleChat("ステータス変更開始　商品バッチ　GITHUB 追加　send by Google colab");
+
 	if( ($Eoc_chigins_unfinished->category == 'J') OR ($Eoc_chigins_unfinished->category == 'B') OR ($Eoc_chigins_unfinished->category == 'W') ){
 		$shouhin->status = 32;
 	}elseif($Eoc_chigins_unfinished->category == 'K'){
@@ -305,6 +308,11 @@ if($Eoc_chigins_unfinished->brand != ''){
 	}else{
 		$shouhin->status = 32;
 	}
+
+
+	sendGoogleChat("全合わず　ステータス変更開始　商品バッチ　GITHUB 追加　send by Google colab".$zenawazu_flag);
+
+	sendGoogleChat("全合わず　ステータス変更開始　商品バッチ　GITHUB 追加　send by Google colab");
 
 	//全合わずの場合、ステータスだけ強制的に合わずにする。
 	if($zenawazu_flag == 1){
