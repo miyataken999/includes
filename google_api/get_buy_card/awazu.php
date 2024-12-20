@@ -112,7 +112,10 @@ if (count($values) == 0) {
 		$satei_by = 0;
 	}
 
-
+	// $values の内容を確認
+	echo "<pre>";
+	print_r($values);
+	echo "</pre>";
 
 	//顧客SEQのセルから取得
 	$ecc_id = $values[0][$ecc_and_price_column];
