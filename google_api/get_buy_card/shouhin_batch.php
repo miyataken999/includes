@@ -1,7 +1,7 @@
 <?php
+//backup部分
 
-
-
+sendGoogleChat("商品バッチ　GITHUB 追加　send by Google colab");
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

@@ -127,7 +127,7 @@ if (count($values) == 0) {
 	//顧客IDの登録
 	//返却用の固定の顧客SEQ
 	if($ecc_id != ''){
-		sendGoogleChat("顧客ID　がない");
+		sendGoogleChat("顧客ID　がありました".$ecc_id);
 
 		$Eoc = Eoc::where('ecc_id',$ecc_id)->find_one();
 		if($Eoc == false){
@@ -404,7 +404,7 @@ if (count($values) == 0) {
 			}
 
 			//商品生成プログラム
-			sendGoogleChat("商品　バッチの作成データの設定　/shouhin_batch.php");
+			sendGoogleChat("407 商品　バッチの作成データの設定　/shouhin_batch.php");
 
 			include $dirname.'/shouhin_batch.php';
 
@@ -443,7 +443,7 @@ if (count($values) == 0) {
 // 	ORM::configure('logging', true);
 // }
 
-		sendGoogleChat("じがねスタート");
+		sendGoogleChat("446 地金スタート");
 
 		$Eoc_chigins = Eoc_chigins::where('Eoc_unfinished_id',$Eoc_unfinished_id)->find_many();
 //ログ出力
@@ -556,7 +556,9 @@ if (count($values) == 0) {
 			$Eoc_timeline->create_by = $satei_by;
 			$Eoc_timeline->create_at = date("Y-m-d H:i:s");
 			$Eoc_timeline->save();
-		}catch(Exception $e){}
+		}catch(Exception $e){
+			sendGoogleChat("タイムライン作成エラー".$e);
+		}
 		//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		//タイムライン生成 END
 		//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
