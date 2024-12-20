@@ -1,0 +1,49 @@
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Headers "Content-Type, X-CSRF-TOKEN, X-XSRF-TOKEN, X-Requested-With, Accept"
+
+RewriteEngine on
+
+# 強制的にHTTPS接続にする
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+
+##############################
+# URLからpublicを削除するコード
+##############################
+
+# RewriteEngine on
+# RewriteCond %{REQUEST_URI} !/public
+# RewriteRule ^(.*)$ public/$1 [L]
+
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -d [OR]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ ^$1 [N]
+
+    RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+    RewriteRule ^(.*)$ public/$1
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ server.php
+
+</IfModule>
+##############################
+# URLからpublicを削除するコード END
+##############################
+
+#POSTデータに許可される最大サイズ
+php_value post_max_size 500M
+
+#1つのファイルアップロードに許可される最大サイズ
+php_value upload_max_filesize 50M
+
+php_value memory_limit 512M
