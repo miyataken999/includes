@@ -3,6 +3,37 @@ $myPath = __FILE__;              //  /home/php/basic/test.php
 $dirname = dirname($myPath);     // $dirname => '/home/php/basic'
 
 
+function sendGoogleChat($check){
+	// 送信するメッセージ
+	$message = json_encode([
+		"text" => "こんにちは！これはawazu check。 ".$check
+	]);
+	
+	// Webhook URL
+	$webhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAomQwUHE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=ahJ5dOaePo0QkrTOGqHNyQORR_-ld8F0h5BO_9o26do';
+	
+	// cURLコマンド
+	$curlCommand = sprintf(
+		'curl -X POST -H "Content-Type: application/json" -d %s "%s"',
+		escapeshellarg($message),
+		$webhookUrl // URLはescapeshellargを使わない
+	);
+	
+	// コマンドを実行
+	system($curlCommand, $returnCode);
+	
+	// 結果確認
+	if ($returnCode === 0) {
+		echo "メッセージが正常に送信されました！\n";
+	} else {
+		echo "メッセージ送信に失敗しました。エラーコード: $returnCode\n";
+	}
+
+}
+
+sendGoogleChat("GITHUB 追加　send by Google colab");
+
+
 
 include_once $dirname.'/config.php';
 
@@ -75,6 +106,8 @@ if (count($values) == 0) {
 
 	//顧客SEQのセルから取得
 	$ecc_id = $values[0][$ecc_and_price_column];
+
+	//顧客IDの登録
 	//返却用の固定の顧客SEQ
 	if($ecc_id != ''){
 		$Eoc = Eoc::where('ecc_id',$ecc_id)->find_one();
@@ -83,6 +116,7 @@ if (count($values) == 0) {
 			$Eoc = Eoc::where('ecc_id',$ecc_id)->find_one();
 		}
 	}else{
+		//109175
 		$ecc_id = 109175;
 		$Eoc = Eoc::where('ecc_id',$ecc_id)->find_one();
 	}
