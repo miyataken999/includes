@@ -30,7 +30,7 @@ function sendGoogleChat($check){
 	}
 
 }
-
+//
 sendGoogleChat("GITHUB 追加　send by Google colab");
 
 
@@ -56,6 +56,7 @@ if (isset($values[0][16])) {
 	$ycbm_id = ""; // 1行目Q列
 }
 
+
 //0=A,1=B,2=C
 
 if (count($values) == 0) {
@@ -72,10 +73,15 @@ if (count($values) == 0) {
 <?php
 }else{
 
+	sendGoogleChat("GITHUB スプレッドシートOK　合わず開始");
+
+
 	$Eoc_unfinished = "";
 	$Eoc_unfinished = Eoc_unfinished::where('url_id',$spreadsheetId)->where('sheet_id',$sht_id)->find_one();
 	if($Eoc_unfinished == false){
-        // echo "false\n";
+		sendGoogleChat("Eoc_unshifte");
+
+		// echo "false\n";
         $Eoc_unfinished = Eoc_unfinished::create();
 		$Eoc_unfinished->url_id = $spreadsheetId;
 		$Eoc_unfinished->sheet_id = $sht_id;
@@ -91,10 +97,14 @@ if (count($values) == 0) {
 	$Eoc_unfinished->zenawazu = 1;
 	$zenawazu_flag = 1;
 
+	sendGoogleChat("あわずフラグ設定すべてあわず");
+
+
 	//査定人を取得、変換
 	$satei_by = $values[0][$satei_column];
 	$satei_name = $satei_by;
 	// print "<br>査定人　".$satei_by."<br>";
+	sendGoogleChat("査定人は".$satei_by);
 
 	if($satei_by != ''){
 		$satei_by = users::where('first_name',$satei_by)->find_one()->user_id;
@@ -107,9 +117,15 @@ if (count($values) == 0) {
 	//顧客SEQのセルから取得
 	$ecc_id = $values[0][$ecc_and_price_column];
 
+
+	sendGoogleChat("顧客ID".$ecc_id);
+
+
 	//顧客IDの登録
 	//返却用の固定の顧客SEQ
 	if($ecc_id != ''){
+		sendGoogleChat("顧客ID　がない");
+
 		$Eoc = Eoc::where('ecc_id',$ecc_id)->find_one();
 		if($Eoc == false){
 			$ecc_id = 109175;
@@ -200,6 +216,10 @@ if (count($values) == 0) {
 	$satei_name_array = explode("　",$satei_name);
 
 	$Eoc_unfinished_search = Eoc_unfinished::where('id',$Eoc_unfinished_id)->find_one();
+
+	sendGoogleChat("Eoc_unfinished_search");
+
+
 	if($ecc_id != 109175){
 		$remark_stamp = "";
 		if($Eoc->remark != ''){
@@ -367,6 +387,8 @@ if (count($values) == 0) {
 			//商品生成
 			//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			//該当する Eoc_unfinished_id がない場合のみ生成。
+			sendGoogleChat("商品データの設定");
+
 			$shouhin = shouhin::where('Eoc_chigins_unfinished_id',$Eoc_chigins_unfinished->id)->find_one();
 			if($shouhin == false){
 		        $shouhin = shouhin::create();
@@ -379,6 +401,8 @@ if (count($values) == 0) {
 			}
 
 			//商品生成プログラム
+			sendGoogleChat("商品　バッチの作成データの設定　/shouhin_batch.php");
+
 			include $dirname.'/shouhin_batch.php';
 
 			//あっても無くてもSEQを更新する。
@@ -415,6 +439,9 @@ if (count($values) == 0) {
 // if($_GET["test"] == "test"){
 // 	ORM::configure('logging', true);
 // }
+
+		sendGoogleChat("じがねスタート");
+
 		$Eoc_chigins = Eoc_chigins::where('Eoc_unfinished_id',$Eoc_unfinished_id)->find_many();
 //ログ出力
 // if($_GET["test"] == "test"){
@@ -510,6 +537,9 @@ if (count($values) == 0) {
 		//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		//タイムライン生成
 		//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+		sendGoogleChat("タイムライン作成");
+
+		
 		try{
 			$Eoc_timeline = Eoc_timeline::create();
 			$Eoc_timeline->ecc_id = $ecc_id;
